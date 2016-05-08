@@ -41,9 +41,9 @@
     "synchronisation"
   ],
   "author": "Emre Sakarya",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@gitlab.add2.de:add2-script-library/LocalConnectionAPI.git"
+    "url": "git@github.com:softberry/Local-Connection.git"
   }
 }
