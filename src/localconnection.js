@@ -20,40 +20,85 @@ var LC = LC || {};
      */
     var timestamp = 0,
         /**
+         *
+         * @param checkThisOut  frameObject to be checked
+         * @param frame         name of the frame that should match
+         * @returns {null | window} if matches returns     checkThisOut else null
+         * @private
+         */
+        _checkFrame = function (checkThisOut, frame) {
+            try {
+                if (checkThisOut.name == frame && checkThisOut.LC.ready) {
+                    /**
+                     * Frame is found, and its ready to be connected
+                     */
+
+                    checkThisOut.LC._pair(window);
+                    return checkThisOut;
+                }
+            } catch (e) {
+                return null;
+            }
+            return null;
+        },
+        /**
          * Search and find a iframe by Name.
          * @param frame
-         * @returns {*}
+         * @returns {*} found iframe window as object or null if not found
          * @access private
          */
         _getFrameByName = function (frame) {
             if (frame == LC.name) return window;
             var top = window;
+
+            /**
+             *
+             * @param objFrame frameObject to be scanned
+             * @param frame     name of the frame that should match
+             * @returns {*}     if matches returns     objFrame else continue to seek deeper and returns null
+             */
+            function deeperFrame(objFrame, frame) {
+                var d = 0;
+                while (d < objFrame.length) {
+
+
+                    var deepFrame = objFrame.frames[d];
+                    d++;
+                    if (deepFrame.frames.length > 0 && window.LC[frame] == null) {
+                        /** seek vertical down*/
+                        var deeper = deeperFrame(deepFrame, frame);
+                        if (deeper != null) return deeper;
+
+                    }
+                    var checkedFrame = _checkFrame(deepFrame, frame);
+                    if (checkedFrame !== null) return checkedFrame;
+
+                }
+                return null;
+
+            }
+
             /**
              * Climb the  DOM first vertically, and then seek iframes horizontally
              */
             while (top !== top.parent) {
                 /** seek vertical up*/
                 top = top.parent;
-                for (var i = 0; i < top.frames.length; i++) {
-                    /** seek horizontal */
-                    var childFrame = top.frames[i];
-
-                    try {
-                        if (childFrame.name == frame && childFrame.LC.ready) {
-                            /**
-                             * Frame is found, and its ready to be connected
-                             */
-                            childFrame.LC._pair(window);
-                            return childFrame;
-                        }
-                    } catch (e) {
-                        console.log('Search error for ' + frame + ': ' + e.message);
-                    }
+            }
+            var i = 0;
+            while (i < top.frames.length) {
+                /** seek horizontal */
+                var childFrame = top.frames[i];
+                i++;
+                /** seek vertical down*/
+                if (childFrame.frames.length > 0 && window.LC[frame] == null) {
+                    var deeper = deeperFrame(childFrame, frame);
+                    if (deeper != null) return deeper;
                 }
+                var checkedFrame = _checkFrame(childFrame, frame);
+                if (checkedFrame !== null) return checkedFrame;
 
             }
-
-
             return null;
         },
         /**
@@ -74,17 +119,17 @@ var LC = LC || {};
         },
         /**
          *minimum requirements tested to establish a connection.
-         * @returns {boolean} 
+         * @returns {boolean}
          * @access private
          */
         _validate = function () {
 
-            if (LC.key == '') return console.log('%c-->LC: ','background:#f00;color:#fff;', 'A unique Handshake message must be defined.\n');
-            if (LC.name == '') return console.log('%c-->LC: ','background:#f00;color:#fff;', 'window name   must be defined.\n');
+            if (LC.key == '') return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'A unique Handshake message must be defined.\n');
+            if (LC.name == '') return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'window name   must be defined.\n');
             if (typeof  LC.frames === 'string') LC.frames = LC.frames.split(',');
-            if (!LC.frames.length || LC.frames.length == 0) return console.log('%c-->LC: ','background:#f00;color:#fff;', 'Companion names must  be defined.\n');
-            if (LC.onConnect && typeof LC.onConnect !== 'function') return console.log('%c-->LC: ','background:#f00;color:#fff;', 'on connect  must be a function.\n');
-            if (LC.onTimeout && typeof LC.onTimeout !== 'function') return console.log('%c-->LC: ','background:#f00;color:#fff;', 'on connect function must be a function.\n');
+            if (!LC.frames.length || LC.frames.length == 0) return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'Companion names must  be defined.\n');
+            if (LC.onConnect && typeof LC.onConnect !== 'function') return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'on connect  must be a function.\n');
+            if (LC.onTimeout && typeof LC.onTimeout !== 'function') return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'on connect function must be a function.\n');
             return true;
         },
         /**
@@ -109,7 +154,7 @@ var LC = LC || {};
                 if (checkFrame == null) {
                     LC[LC.frames[n]] = _getFrameByName(LC.frames[n]);
                 } else {
-                    console.log(checkFrame.left, checkFrame.top, checkFrame.right);
+                    //    console.log(checkFrame.toString());
                 }
             }
 
@@ -185,7 +230,7 @@ var LC = LC || {};
     }
     LC.ready = document.readyState == "complete";
     LC._pair = function (w) {
-        /** check key and register name if key is correct */       
+        /** check key and register name if key is correct */
         if (w.LC.key === LC.key) {
             LC[w.LC.name] = w;
         }
@@ -212,14 +257,14 @@ var LC = LC || {};
          * parameter[1] -required- -string- set the name of the current window
          * parameter[2] -required- -array-l  set the name of the all  windows
          */
-        /** if timeout given start counter   */
+        /** if timeout given, start counter   */
         if (LC.timeout > 0) _counterReset();
         if (arguments.length == 0 && _validate()) {
             /**@description connect method 1 : all required values are pre-defined*/
             window.name = LC.name;
             /*if timeout given start counter */
             if (LC.timeout > 0) _counterReset();
-            return _reconnect(); 
+            return _reconnect();
         }
         if (arguments.length == 1 && typeof arguments[0] === 'object') {
             /** connect method 2 : all required values are passed as an object*/
@@ -235,7 +280,7 @@ var LC = LC || {};
                 window.name = LC.name;
                 return _reconnect();
             } else {
-                return console.log('%c-->LC: ','background:#f00;color:#fff;', 'Invalid values passed...');
+                return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'Invalid values passed...');
             }
         }
         if (arguments.length > 1) {
@@ -246,14 +291,14 @@ var LC = LC || {};
 
             /** Check & Assign current window name*/
             if (arguments.length < 2 && LC.name != '') {
-                console.log('%c-->LC: ','background:#f00;color:#fff;', 'window name   must be defined.\n');
+                console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'window name   must be defined.\n');
             } else {
                 LC.name = arguments[1];
                 window.name = LC.name;
             }
             /** check and assign Companion iframe names into Array */
             if (arguments.length < 3 && LC.frames.length == 0) {
-                return console.log('%c-->LC: ','background:#f00;color:#fff;', 'Companion names must be defined.\n');
+                return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'Companion names must be defined.\n');
             } else {
                 var frameNames = arguments[2];
                 if (typeof frameNames === 'object' || frameNames.length > 0) {
@@ -264,7 +309,7 @@ var LC = LC || {};
                     if (frameNames.length > 0) {
                         LC.frames = frameNames;
                     } else {
-                        return console.log('%c-->LC: ','background:#f00;color:#fff;', 'Companion names must be defined.\n');
+                        return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'Companion names must be defined.\n');
                     }
 
                 }
@@ -274,22 +319,22 @@ var LC = LC || {};
             if (arguments.length > 3) {
                 /** check and Assign onConnect Function - if exists -*/
                 if (typeof arguments[3] === 'function') {
-                    LC.onConnect = arguments[3]; 
+                    LC.onConnect = arguments[3];
                 } else {
-                    console.log('%c-->LC: ','background:#f00;color:#fff;', 'onConnect must be a function.\n');
+                    console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'onConnect must be a function.\n');
                 }
                 /** check and Assign timeout - if exists & higher then zero  -*/
                 if (arguments[4] && typeof arguments[4] === 'number') {
                     LC.timeout = arguments[4];
                     if (LC.timeout > 0) _counterReset();
                 } else {
-                    console.log('%c-->LC: ','background:#f00;color:#fff;', ' timeout must be a number.\n');
+                    console.log('%c-->LC: ', 'background:#f00;color:#fff;', ' timeout must be a number.\n');
                 }
                 /** check and Assign onTimeout Function - if exists -*/
                 if (arguments[5] && typeof arguments[5] === 'function') {
                     LC.onTimeout = arguments[5];
                 } else {
-                    console.log('%c-->LC: ','background:#f00;color:#fff;', ' onTimeout must be a function.\n');
+                    console.log('%c-->LC: ', 'background:#f00;color:#fff;', ' onTimeout must be a function.\n');
                 }
             }
             /** Validate all parameters and try to connect */
@@ -297,7 +342,7 @@ var LC = LC || {};
                 window.name = LC.name;
                 return _reconnect();
             } else {
-                return console.log('%c-->LC: ','background:#f00;color:#fff;', 'Invalid values passed...');
+                return console.log('%c-->LC: ', 'background:#f00;color:#fff;', 'Invalid values passed...');
             }
         }
 
