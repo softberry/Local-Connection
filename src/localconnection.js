@@ -28,7 +28,7 @@ var LC = LC || {};
          */
         _checkFrame = function (checkThisOut, frame) {
             try {
-                if (checkThisOut.name == frame && checkThisOut.LC.ready) {
+                if (checkThisOut.key == LC.key & checkThisOut.name == frame && checkThisOut.LC.ready) {
                     /**
                      * Frame is found, and its ready to be connected
                      */
