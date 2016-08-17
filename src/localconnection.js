@@ -4,7 +4,7 @@
 /** @author Emre Sakarya
  *
  * @desc Local Connection API is used to synchronise and allow communicate iframes with each other.<br />
- * <p>It has only one method 'connect' as desribed below. It doesn't need to be initialized. <hr/></p>
+ * <p>It has only one method 'connect' as described below. It doesn't need to be initialized. <hr/></p>
  * Download :<a href="">Development Version</a>
  * @namespace LC
  * @public
@@ -28,7 +28,7 @@ var LC = LC || {};
          */
         _checkFrame = function (checkThisOut, frame) {
             try {
-                if (checkThisOut.key == LC.key & checkThisOut.name == frame && checkThisOut.LC.ready) {
+                if (checkThisOut.LC.key == LC.key & checkThisOut.name == frame && checkThisOut.LC.ready) {
                     /**
                      * Frame is found, and its ready to be connected
                      */
