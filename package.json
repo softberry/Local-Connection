@@ -31,7 +31,7 @@
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "xo src/localconnection.js"
   },
   "keywords": [
     "local",
@@ -40,7 +40,24 @@
     "connection",
     "synchronisation"
   ],
-  "author": "Emre Sakarya",
+  "xo": {
+    "semi": true,
+    "space": 4,
+    "overrides": [
+      {
+        "files": "src/localconnection.js",
+        "esnext": false
+      }
+    ],
+    "globals": [
+      "window",
+      "LC"
+    ]
+  },
+  "author": {
+    "name": "Emre Sakarya",
+    "url": "http://www.emresakarya.com/local-connection/"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
