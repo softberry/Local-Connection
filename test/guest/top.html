@@ -1,0 +1,40 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Host file for LocalConnection Test</title>
+    <meta name="description" content="Host">
+    <meta name="author" content="Emre Sakarya">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+    <link rel="stylesheet" href="style.css">
+    <script src="localconnection.js"></script>
+</head>
+<h1>MIDDLE</h1>
+<span class="status"></span>
+
+<body>
+
+    <script>
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            new LocalConnection({
+                key: 'uniqueConnectionString',
+                name: 'top',
+                frames: ['right', 'left'],
+                onConnect: function () {
+                    LC.right.document.querySelector('.status').classList.add('connected')
+
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -47,7 +47,7 @@ gulp.task('server', () => {
     guest.init({
         open: false,
         online: false,
-        server: ['src', 'test/guest'],
+        server: ['src', 'test/guest','docs'],
         port: '3200'
     }, () => {
         var host = browserSync.create()

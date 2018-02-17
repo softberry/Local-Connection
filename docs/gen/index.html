@@ -152,58 +152,40 @@
 </tr>
 </tbody>
 </table>
-<h3>METHODS</h3><p>It has only one method, which is <code>connect</code>.</p>
-<p><code>connect(key,name,frames,[onConnectFunction,timeout,onTimeoutFunction])</code></p>
-<h3>HOW TO USE IT</h3><p>First thing ist first : link to LocalconnectionAPI (<code>localconnection.min.js</code>) script to each <code>index.html</code>. Minified version doesn't give any message to Browsers Console.
-During development it's also possible to use un-minified version <code>localconnection.dev.js</code>  to see logs, but  It's not suggested to leave un-minified version in the final creative.</p>
+<h3>HOW TO USE IT</h3><p>First thing ist first : link to LocalconnectionAPI (<code>localconnection.min.js</code>) script to each <code>index.html</code>. 
+Minified version doesn't give any message to Browsers Console.
+During development it's also possible to use un-minified version <code>localconnection.js</code>  to see logs, 
+but  It's not suggested to leave un-minified version in the final creative.</p>
 <p>Place LocalconnectionAPI (<code>localconnection.min.js</code>) preferably just before the closing &lt;/head&gt; tag, as follow:</p>
-<p>If your creative hosted by our servers, you do not need to download and deliver it with your Creative. Simply just place these codes in your index.html file.</p>
-<p><strong>Option 1</strong> : Set all required values for the <code>LC</code> Object and then call <code>LC.connect();</code> without any parameter :</p>
-<pre class="prettyprint source"><code>    &lt;script>
-        LC.key = 'uniqueConnectionString';
-        LC.name = 'right';
-        LC.frames = 'left,top';
-        LC.onConnect = function () {
-            console.log('Do this as soon as connection established!');
-            /*
-             From this point window of left and top will be available as
-             LC.left and LC.top
-             for example :
-             */
-            LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
-        };
-        LC.connect();
-    &lt;/script></code></pre><p><strong>Option 2</strong> :
-Pass parameters as JavaScript Object :</p>
-<pre class="prettyprint source"><code>    &lt;script>
-        LC.connect({
-                    &quot;key&quot;: &quot;uniqueConnectionString&quot;,
-                    &quot;name&quot;: &quot;right&quot;,
-                    &quot;frames&quot;: ['left', 'top'],
-                    &quot;onConnect&quot;: function () {
-                        console.log('Do this as soon as connection established!');
-                        /*
-                         From this point window of left and top will be available as
-                         LC.left and LC.top
-                         for example :
-                         */
-                        LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
-                    },
-                    &quot;timeout&quot;: 7,
-                    &quot;onTimeout&quot;: function () {
-                        console.log('Connection timed out!');
-                    }
+<p><strong><code>&lt;script src=&quot;localconnection.min.js&quot;&gt;&lt;/script&gt;</code></strong></p>
+<p>Then define options in each HTML page (which needs to connect with other) </p>
+<pre class="prettyprint source"><code>&lt;script>
+    new LocalConnection({
+        key: 'uniqueConnectionString',
+        name: 'left',
+        frames: ['top', 'right'],
+        onConnect: function () {
+                /*
+                    From this point window of left and top will be available as
+                    LC.left and LC.top
+                    for example :
+                */
+
+                LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
                 }
-        );
-    &lt;/script></code></pre><p><strong>Option 3</strong> :
-Pass parameters directly to connect function:</p>
-<pre class="prettyprint source"><code>    &lt;script>
-        LC.connect(&quot;uniqueConnectionString&quot;, &quot;right&quot;, [&quot;left&quot;, &quot;top&quot;] | onConnectFunction, timeout, onTimeoutFunction);
-    &lt;/script></code></pre><p>Option 3 ist the short hand version of the Option 1 and Option 2.  You can use freely any one of these options to establish connection.</p>
+        timeout: 0, // If you want to quit after a given amount of time set here as second 
+        onTimeout: function () {
+                    // If you set timeout property bigger than '0'
+                    // this function will be called if no succes in connection
+                }
+            });
+&lt;/script></code></pre><h3>SAMPLE</h3><p>A working sample available in <a href="test/">test</a> folder</p>
 <p><strong>IMPORTANT</strong></p>
-<p>-Last <code>connect()</code> method overrides all previously set values.</p>
-<p>-As soon as local connection established, runs <code>onConnect</code> function. Therefore, stop or pause video, canvas or css animations and initialize these functions through <code>onConnect</code> method.</p>
-<p>-As soon as local connection established, all defined frames are available to current <code>LC</code> object as child. For example banner <code>left</code> becomes child of <strong><code>LC</code></strong> in the frame <code>top</code> as <code>LC.left</code> as so on.</p></article>
+<p>-As soon as local connection established: </p>
+<ul>
+<li>runs <code>onConnect</code> function. Therefore, stop or pause video, canvas or css animations and initialize these functions through <code>onConnect</code> method.</li>
+<li>all defined frames are available to current <code>LC</code> object as child. For example banner <code>left</code> becomes child of <strong><code>LC</code></strong> in the frame <code>top</code> as <code>LC.left</code> as so on.</li>
+</ul></article>
     </section>
 
 
@@ -249,7 +231,7 @@ Pass parameters directly to connect function:</p>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on February 17th 2018, 1:08:51 am
+		on February 18th 2018, 12:13:26 am
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

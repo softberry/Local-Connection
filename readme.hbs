@@ -31,84 +31,45 @@ From now on all connected windows can communicate with each other.
 |`onTimeout` | Function | NO|`LC.onTimeout = function(){ console.log("Timed out!"); }` | Define a function that will be called if timeout occurs. It will only be called if `timeout` is greater then `0`. |
 
 
-### METHODS
-
-It has only one method, which is `connect`.
-
-`connect(key,name,frames,[onConnectFunction,timeout,onTimeoutFunction])`
 
 ### HOW TO USE IT
 
-First thing ist first : link to LocalconnectionAPI (`localconnection.min.js`) script to each `index.html`. Minified version doesn't give any message to Browsers Console.
-During development it's also possible to use un-minified version `localconnection.js`  to see logs, but  It's not suggested to leave un-minified version in the final creative.
+First thing ist first : link to LocalconnectionAPI (`localconnection.min.js`) script to each `index.html`. 
+Minified version doesn't give any message to Browsers Console.
+During development it's also possible to use un-minified version `localconnection.js`  to see logs, 
+but  It's not suggested to leave un-minified version in the final creative.
 
 Place LocalconnectionAPI (`localconnection.min.js`) preferably just before the closing &lt;/head&gt; tag, as follow:
 
         <script src="localconnection.min.js"></script>
 
-**Option 1** : Set all required values for the `LC` Object and then call `LC.connect();` without any parameter :
-
         <script>
-            LC.key = 'uniqueConnectionString';
-            LC.name = 'right';
-            LC.frames = 'left,top';
-            LC.onConnect = function () {
-                console.log('Do this as soon as connection established!');
-                /*
-                 From this point window of left and top will be available as
-                 LC.left and LC.top
-                 for example :
-                 */
-                LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
-            };
-            LC.connect();
+            new LocalConnection({
+                        key: 'uniqueConnectionString',
+                        name: 'left',
+                        frames: ['top', 'right'],
+                        onConnect: function () {
+                                /*
+             From this point window of left and top will be available as
+             LC.left and LC.top
+             for example :
+             */
+            LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
+                                }
+                        timeout: 0, // If you want to quit after a given amount of time set here as second 
+                        onTimeout: function () {
+                                    // If you set timeout property bigger than '0'
+                                    // this function will be called if no succes in connection
+                                }
+                    });
         </script>
-
-**Option 2** :
-Pass parameters as JavaScript Object :
-
-        <script>
-            LC.connect({
-                        "key": "uniqueConnectionString",
-                        "name": "right",
-                        "frames": ['left', 'top'],
-                        "onConnect": function () {
-                            console.log('Do this as soon as connection established!');
-                            /*
-                             From this point window of left and top will be available as
-                             LC.left and LC.top
-                             for example :
-                             */
-                            LC.left.document.getElementsByTagName('body')[0].style.backgroundColor = 'pink';
-                        },
-                        "timeout": 7,
-                        "onTimeout": function () {
-                            console.log('Connection timed out!');
-                        }
-                    }
-            );
-        </script>
-
-**Option 3** :
-Pass parameters directly to connect function:
-
-        <script>
-            LC.connect("uniqueConnectionString", "right", ["left", "top"] | onConnectFunction, timeout, onTimeoutFunction);
-        </script>
-
-
-Option 3 ist the short hand version of the Option 1 and Option 2.  You can use freely any one of these options to establish connection.
 
 
 **IMPORTANT**
 
-
-
--Last `connect()` method overrides all previously set values.
-
--As soon as local connection established, runs `onConnect` function. Therefore, stop or pause video, canvas or css animations and initialize these functions through `onConnect` method.
-
--As soon as local connection established, all defined frames are available to current `LC` object as child. For example banner `left` becomes child of **`LC`** in the frame `top` as `LC.left` as so on.
+-As soon as local connection established: 
+        - runs `onConnect` function. Therefore, stop or pause video, canvas or css animations and initialize these functions through `onConnect` method.
+        - all defined frames are available to current `LC` object as child. For example banner `left` becomes child of **`LC`** in the frame `top` as `LC.left` as so on.
 
 
 
