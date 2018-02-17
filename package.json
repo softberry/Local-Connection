@@ -15,9 +15,7 @@
     "gulp": "^3.9.1",
     "gulp-ftp": "^1.1.0",
     "gulp-jasmine": "^2.3.0",
-    "gulp-jsdoc": "^0.1.5",
-    "gulp-jsdoc-to-markdown": "^1.2.1",
-    "gulp-jsdoc3": "^0.2.1",
+    "gulp-jsdoc3": "^1.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-rename": "^1.2.2",
     "gulp-sftp": "^0.1.5",
@@ -27,7 +25,6 @@
     "gulp-util": "^3.0.7",
     "gutil": "^1.6.4",
     "ink-docstrap": "^1.1.4",
-    "jsdoc": "^3.4.0",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
