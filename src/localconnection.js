@@ -9,7 +9,7 @@
 (function () {
     'use strict';
     function CustomError(msg) {
-        this.name = 'LocalConnectionCusomError. http://www.github.com/softberry/LocalConnection';
+        this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
         this.message = msg;
     }
     /**
