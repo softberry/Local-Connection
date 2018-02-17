@@ -1,6 +1,7 @@
 /** @author Emre Sakarya
  * @desc Local Connection API is used to synchronise and allow communicate iframes with each other.<br />
- * 
+ * <p>It has only one method 'connect' as described below. It doesn't need to be initialized. <hr/></p>
+ * Download :<a href="">Development Version</a>
  * @namespace LC
  * @public
  *    */
