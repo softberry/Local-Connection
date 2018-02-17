@@ -13,8 +13,7 @@ var gulp = require('gulp'),
     fs = require('fs'),
     gutil = require('gulp-util'),
     sftp = require('gulp-sftp'),
-    jsdoc = require('gulp-jsdoc3'),
-    gulpJsdoc2md = require('gulp-jsdoc-to-markdown');
+    jsdoc = require('gulp-jsdoc3');
 gulp.task('clean:out', function () {
     return del(['./out/*.html']);
 });
@@ -29,8 +28,8 @@ gulp.task('js', function () {
         .pipe(livereload());
 });
 gulp.task('jsdoc', ['clean:out'], function () {
-    gulp.src(['README.md', 'src/localconnection.js'], {read: false})
-        .pipe(jsdoc('./api/'));
+    gulp.src(['README.md', 'src/localconnection.js'], { read: false })
+        .pipe(jsdoc());
 });
 gulp.task('watch', function () {
     livereload.listen();
