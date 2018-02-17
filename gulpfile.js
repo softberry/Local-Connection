@@ -13,7 +13,9 @@ var gulp = require('gulp'),
     fs = require('fs'),
     gutil = require('gulp-util'),
     sftp = require('gulp-sftp'),
-    jsdoc = require('gulp-jsdoc3');
+    jsdoc = require('gulp-jsdoc3'),
+    browserSync = require('browser-sync');
+
 gulp.task('clean:out', function () {
     return del(['./out/*.html']);
 });
@@ -36,4 +38,27 @@ gulp.task('watch', function () {
     gulp.watch('src/localconnection.js', ['js', 'jsdoc']);
 
 });
+
+gulp.task('server', () => {
+
+    var guest = browserSync.create();
+
+
+    guest.init({
+        open: false,
+        online: false,
+        server: ['src', 'test/guest'],
+        port: '3200'
+    }, () => {
+        var host = browserSync.create()
+        host.init({
+            open: true,
+            online: false,
+            server: 'test/host',
+            port: '3300'
+        })
+    });
+
+
+})
 gulp.task('default', ['js', 'jsdoc', 'watch']);
