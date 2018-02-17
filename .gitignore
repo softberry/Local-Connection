@@ -1,7 +1,5 @@
 .idea/**
 .idea/
-dist/
 out/
-test/
 .DS_Store
 node_modules/
