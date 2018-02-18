@@ -1,6 +1,6 @@
 # LOCALCONNECTION API 2.0
 
-For direct help on implementing Local Connection :
+Get in contact for help from developer:
 
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/emresakarya?utm_source=github&utm_medium=button&utm_term=emresakarya&utm_campaign=github)
 
