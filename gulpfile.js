@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     stripComment = require('gulp-strip-comments'),
     stripDebug = require('gulp-strip-debug'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    markdown = require('gulp-markdown');
 
 
 gulp.task('js', function () {
@@ -27,20 +28,26 @@ gulp.task('server', () => {
     guest.init({
         open: false,
         online: false,
-        files:['**'],
-        server: ['src', 'test/guest','docs'],
+        files: ['**'],
+        server: ['src', 'test/guest', 'docs'],
         port: '3200'
     }, () => {
         var host = browserSync.create()
         host.init({
             open: true,
             online: false,
-            files:['**'],
+            files: ['**'],
             server: 'test/host',
             port: '3300'
         })
     });
+});
+gulp.task('doc', function () {
+    gulp.src('README.md')
+        .pipe(markdown())
+        .pipe(rename('readme.html'))
+        .pipe(gulp.dest('doc'))
 
-
-})
-gulp.task('default', ['js','server']);
+}
+);
+gulp.task('default', ['js', 'doc', 'server']);
