@@ -4,12 +4,11 @@
 [![npm](https://img.shields.io/npm/l/local-connection.svg?style=for-the-badge)]()
 [![GitHub last commit](https://img.shields.io/github/last-commit/softberry/Local-Connection.svg?style=for-the-badge)]()
 
-
-
-Get in contact for help :
+Get in contact for help from developer:
 
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/Local-Connection/Lobby)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/emresakarya?utm_source=github&utm_medium=button&utm_term=emresakarya&utm_campaign=github)
+[![Website](https://img.shields.io/website-up-down-green-red/http/emresakarya.com.svg?label=Visit WebSite&style=for-the-badge)](http://www.emresakarya.com/local-connection/)
 
 
 
