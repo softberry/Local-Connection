@@ -1,5 +1,6 @@
-# LOCALCONNECTION API
+# LOCALCONNECTION API 2.0
 
+**IMPORTANT ** <span style="color:red">This version doesn't have backward compatibility. As this has a simplified connection method.</span>
 ## SYNCRONIZE IFRAMES IN WINDOW
 
 This script is used to communicate and synchronise iframes placed in same parent window.

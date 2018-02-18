@@ -14,22 +14,16 @@
     "del": "^2.2.0",
     "fs": "0.0.2",
     "gulp": "^3.9.1",
-    "gulp-ftp": "^1.1.0",
-    "gulp-jasmine": "^2.3.0",
-    "gulp-jsdoc3": "^1.0.1",
-    "gulp-livereload": "^3.8.1",
     "gulp-rename": "^1.2.2",
-    "gulp-sftp": "^0.1.5",
     "gulp-strip-comments": "^2.4.2",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
-    "gulp-util": "^3.0.7",
     "gutil": "^1.6.4",
     "ink-docstrap": "^1.1.4",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
-    "test": "xo src/localconnection.js"
+    "test": "xo src/localconnection.js && gulp"
   },
   "keywords": [
     "local",
