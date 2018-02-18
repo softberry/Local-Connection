@@ -1,5 +1,5 @@
 {
-  "name": "localconnectionapi",
+  "name": "local-connection",
   "version": "1.0.0",
   "description": "API to use Localconnection between iframes in same window",
   "main": "loacalconnection.js",
