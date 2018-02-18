@@ -1,8 +1,8 @@
 {
-  "name": "localconnectionapi",
+  "name": "local-connection",
   "version": "1.0.0",
   "description": "API to use Localconnection between iframes in same window",
-  "main": "loacalconnection.js",
+  "main": "src/loacalconnection.js",
   "directories": {
     "test": "test"
   },
@@ -49,6 +49,7 @@
   },
   "author": {
     "name": "Emre Sakarya",
+    "email": "emre@emresakarya.com",
     "url": "http://www.emresakarya.com/local-connection/"
   },
   "license": "MIT",
