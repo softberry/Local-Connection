@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
     <link rel="stylesheet" href="style.css">
-    <script src="localconnection.js"></script>
+    <script src="localconnection.es5.js"></script>
 </head>
 <h1>MIDDLE</h1>
 <span class="status"></span>
@@ -21,10 +21,10 @@
 
     <script>
 
-
+console.log(window.hash);
         document.addEventListener("DOMContentLoaded", function () {
             new LocalConnection({
-                key: 'uniqueConnectionString',
+                key: document.location.hash || 'uniqueConnectionString',
                 name: 'top',
                 frames: ['right', 'left'],
                 onConnect: function () {
@@ -33,6 +33,7 @@
                 }
             });
         });
+   
     </script>
 
 </body>
