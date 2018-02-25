@@ -3,17 +3,22 @@
  */
 ;
 'use strict';
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     stripComment = require('gulp-strip-comments'),
     stripDebug = require('gulp-strip-debug'),
     browserSync = require('browser-sync'),
+    babel = require('gulp-babel'),
     markdown = require('gulp-markdown');
 
 
-gulp.task('js', function () {
+
+gulp.task('js', () => {
     gulp.src('src/localconnection.js')
+        .pipe(babel({
+            presets: ['env']
+        }))
         .pipe(gulp.dest('test/'))
         .pipe(stripDebug())
         .pipe(stripComment())
@@ -42,7 +47,7 @@ gulp.task('server', () => {
         })
     });
 });
-gulp.task('doc', function () {
+gulp.task('doc', () => {
     gulp.src('README.md')
         .pipe(markdown())
         .pipe(rename('readme.html'))

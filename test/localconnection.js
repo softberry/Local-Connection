@@ -1,3 +1,7 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /** @author Emre Sakarya
  * @desc Local Connection API is used to synchronise and allow communicate iframes with each other.<br />
  * <p>It has only one method 'connect' as described below. It doesn't need to be initialized. <hr/></p>
@@ -8,6 +12,7 @@
 
 (function () {
     'use strict';
+
     function CustomError(msg) {
         this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
         this.message = msg;
@@ -18,7 +23,7 @@
      */
     function missingOptions(_opt) {
         try {
-            if (typeof _opt !== 'object') {
+            if ((typeof _opt === 'undefined' ? 'undefined' : _typeof(_opt)) !== 'object') {
                 throw new CustomError('LocalConnection required options key,name,frames must be defined!');
             }
             if (!_opt.key) {
@@ -205,7 +210,7 @@
      * @param {{}} _opt Settings object
      * @constructor
      */
-    var LocalConnection = function (_opt) {
+    var LocalConnection = function LocalConnection(_opt) {
         var self = this;
         window.LC = self;
         /**
@@ -225,15 +230,15 @@
         self.name = _opt.name;
         self.frames = _opt.frames;
         self.timeout = Number.parseInt(_opt.timeout, 10) || 0;
-        self.onConnect = _opt.onConnect || function () { };
-        self.onTimeout = _opt.onTimeout || function () { };
+        self.onConnect = _opt.onConnect || function () {};
+        self.onTimeout = _opt.onTimeout || function () {};
 
         /**
         * Holds the current timestamp on initialiasation of the LC object.
         * Timestamp is only used if timout variable set to true
         * @type {number}
         */
-        self.timestamp = self.timeout === 0 ? 0 : Date.now() + (self.timeout * 1000);
+        self.timestamp = self.timeout === 0 ? 0 : Date.now() + self.timeout * 1000;
         if (window.addEventListener) {
             window.addEventListener('load', function () {
                 self.ready = true;
