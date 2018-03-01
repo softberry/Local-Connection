@@ -16,7 +16,6 @@
 </head>
 
 <body>
-  <h1>RIGHT</h1>
   <span class="status"></span>
 
   <script>
@@ -24,7 +23,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       new LocalConnection({
-        key: 'uniqueConnectionString',
+        key: document.location.hash || 'uniqueConnectionString',
         name: 'right',
         frames: ['top', 'left'],
         onConnect: function () {
@@ -32,6 +31,7 @@
         }
       });
     });
+ 
   </script>
 
 </body>

@@ -1,5 +1,5 @@
 # LOCALCONNECTION API 2.0
-
+<hr>
 [![local-connection](https://img.shields.io/npm/v/local-connection.svg?style=for-the-badge)]()
 [![npm](https://img.shields.io/npm/l/local-connection.svg?style=for-the-badge)]()
 [![GitHub last commit](https://img.shields.io/github/last-commit/softberry/Local-Connection.svg?style=for-the-badge)]()

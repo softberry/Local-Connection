@@ -1,7 +1,3 @@
-'use strict';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /** @author Emre Sakarya
  * @desc Local Connection API is used to synchronise and allow communicate iframes with each other.<br />
  * <p>It has only one method 'connect' as described below. It doesn't need to be initialized. <hr/></p>
@@ -9,21 +5,57 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * @namespace LC
  * @public
  *    */
+'use strict';
+function CustomError(msg) {
+    this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
+    this.message = msg;
+}
+class LocalConnection {
+    constructor(_opt) {
+        const self = this;
+        window.LC = self;
+        self.key = _opt.key;
+        self.name = _opt.name;
+        self.frames = _opt.frames;
+        self.timeout = Number.parseInt(_opt.timeout, 10) || 0;
+        self.onConnect = _opt.onConnect || function () { };
+        self.onTimeout = _opt.onTimeout || function () { };
+        self._timestamp = 0;
+        self.connected = false;
 
-(function () {
-    'use strict';
+        if (self.missingOptions(_opt)) {
+            return;
+        }
 
-    function CustomError(msg) {
-        this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
-        this.message = msg;
+        self._timestamp = self.timeout === 0 ? 0 : Date.now() + (self.timeout * 1000);
+
+        if (window.addEventListener) {
+            window.addEventListener('load', () => {
+                self.ready = true;
+                console.log(self.name, ' ready ', self.ready);
+            });
+        } else {
+            window.attachEvent('onload', () => {
+                self.ready = true;
+                console.log(self.name, ' ready ', self.ready);
+            });
+        }
+        self.ready = window.document.readyState === 'complete';
+
+        /*
+        Try to connect
+        */
+        self.reconnect();
     }
+
     /**
      * Validates mandatory options.
      * @param {object} _opt Settings object.
      */
-    function missingOptions(_opt) {
+
+    missingOptions(_opt) {
         try {
-            if ((typeof _opt === 'undefined' ? 'undefined' : _typeof(_opt)) !== 'object') {
+            if (typeof _opt !== 'object') {
                 throw new CustomError('LocalConnection required options key,name,frames must be defined!');
             }
             if (!_opt.key) {
@@ -55,9 +87,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 5-   on error : tries to connect again in a second
          * @access private
     */
-    function reconnect() {
-        var self = this;
-        if (self.timeout > 0 && Date.now() > self.timestamp) {
+
+    reconnect() {
+        const self = this;
+        if (self.timeout > 0 && Date.now() > self._timestamp) {
             /*  Do not try to connect anymore, Timed out */
             return self.onTimeout();
         }
@@ -65,21 +98,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             /* 'window' is not in iframe, which means there is no other frames available. Quit trying */
             return self.onTimeout();
         }
-        var n = 0;
+        let n = 0;
         for (n = 0; n < self.frames.length; n++) {
-            self[self.frames[n]] = self[self.frames[n]] || getFrameByName.call(self, self.frames[n]);
+            self[self.frames[n]] = self[self.frames[n]] || self.getFrameByName(self.frames[n]);
         }
 
         /* Update connection status */
-        self.connected = isConnected.call(self);
+        self.connected = self.isConnected();
 
         if (self.connected) {
             /* Call onConnect Function if connection established */
             self.onConnect();
         } else {
             /* Try to reconnect in a second   if connection is not yet  established */
-            window.setTimeout(function () {
-                reconnect.call(self);
+            window.setTimeout(() => {
+                self.reconnect();
             }, 1000);
         }
     }
@@ -88,10 +121,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @returns {boolean}
      * @access private
      */
-    function isConnected() {
-        var status = true;
-        var self = this;
-        for (var e = 0; e < self.frames.length; e++) {
+
+    isConnected() {
+        let status = true;
+        const self = this;
+        for (let e = 0; e < self.frames.length; e++) {
             if (self[self.frames[e]] === null) {
                 status = false;
             }
@@ -106,12 +140,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @returns {*} found iframe window as object or null if not found
      * @access private
      */
-    function getFrameByName(frame) {
-        var self = this;
+    getFrameByName(frame) {
+        const self = this;
         if (frame === self.name) {
             return window;
         }
-        var top = window;
+        let top = window;
 
         /**
          *
@@ -120,19 +154,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * @returns {*}     if matches returns     objFrame else continue to seek deeper and returns null
          */
         function deeperFrame(objFrame, frame) {
-            var d = 0;
+            let d = 0;
             while (d < objFrame.length) {
-                var deepFrame = objFrame.frames[d];
+                const deepFrame = objFrame.frames[d];
                 d++;
 
-                if (deepFrame.frames.length > 0 && self[frame] === null) {
+                if (deepFrame.frames.length > 0 && !self[frame] ) {
                     /* Seek vertical down */
-                    var deeper = deeperFrame(deepFrame, frame);
+                    const deeper = deeperFrame(deepFrame, frame);
                     if (deeper !== null) {
                         return deeper;
                     }
                 }
-                var checkedFrame = checkFrame.call(self, deepFrame, frame);
+                const checkedFrame = self.checkFrame(deepFrame, frame);
                 if (checkedFrame !== null) {
                     return checkedFrame;
                 }
@@ -147,20 +181,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             /** Seek vertical up */
             top = top.parent;
         }
-        var i = 0;
+        let i = 0;
         while (i < top.frames.length) {
             /** Seek horizontal */
-            var childFrame = top.frames[i];
+            const childFrame = top.frames[i];
             i++;
             /** Seek vertical down */
 
-            if (childFrame.frames.length > 0 && self[frame] === null) {
-                var deeper = deeperFrame(childFrame, frame);
+            if (childFrame.frames.length > 0 && !self[frame] ) {
+                const deeper = deeperFrame(childFrame, frame);
                 if (deeper !== null) {
                     return deeper;
                 }
             }
-            var checkedFrame = childFrame.LC ? checkFrame.call(self, childFrame, frame) : null;
+            const checkedFrame = typeof childFrame.LC !== 'undefined' ? self.checkFrame(childFrame, frame) : null;
             if (checkedFrame !== null) {
                 return checkedFrame;
             }
@@ -174,14 +208,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * @returns {null | window} if matches returns     checkThisOut else null
          * @private
          */
-    function checkFrame(checkThisOut, frame) {
-        var self = this;
+
+    checkFrame(checkThisOut, frame) {
+        const self = this;
+
         try {
             if (checkThisOut.LC.key === self.key && checkThisOut.LC.name === frame && checkThisOut.LC.ready) {
                 /**
                  * Frame is found, and its ready to be connected
                  */
-                pair.call(checkThisOut.LC, window);
+                self.pair(window);
                 return checkThisOut;
             }
         } catch (e) {
@@ -193,69 +229,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Check key and register name if key is correct
      * @param {*} w
      */
-    function pair(w) {
-        var self = this;
+
+    pair(w) {
+        const self = this;
+        console.log('->', w.LC.key, self.key);
         if (w.LC.key === self.key) {
             self[w.LC.name] = w;
         }
         if (!self.connected) {
-            if (isConnected.call(self)) {
+            if (self.isConnected()) {
                 self.connected = true;
                 self.onConnect();
             }
         }
     }
-    /**
-     * Constructor class LocalConnection
-     * @param {{}} _opt Settings object
-     * @constructor
-     */
-    var LocalConnection = function LocalConnection(_opt) {
-        var self = this;
-        window.LC = self;
-        /**
-             * Holds the current timestamp on initialiasation of the LC object.
-             * Timestamp is only used if timout variable set to true
-             * @type {number}
-             */
-        self.timestamp = 0;
-        /*
-            Check mandatory fields defined correctly.
-        */
-        if (missingOptions(_opt)) {
-            return;
-        }
+}
 
-        self.key = _opt.key;
-        self.name = _opt.name;
-        self.frames = _opt.frames;
-        self.timeout = Number.parseInt(_opt.timeout, 10) || 0;
-        self.onConnect = _opt.onConnect || function () {};
-        self.onTimeout = _opt.onTimeout || function () {};
 
-        /**
-        * Holds the current timestamp on initialiasation of the LC object.
-        * Timestamp is only used if timout variable set to true
-        * @type {number}
-        */
-        self.timestamp = self.timeout === 0 ? 0 : Date.now() + self.timeout * 1000;
-        if (window.addEventListener) {
-            window.addEventListener('load', function () {
-                self.ready = true;
-                console.log(self.name, ' ready ', self.ready);
-            });
-        } else {
-            window.attachEvent('onload', function () {
-                self.ready = true;
-                console.log(self.name, ' ready ', self.ready);
-            });
-        }
-        self.ready = window.document.readyState === 'complete';
-
-        /*
-        Try to connect
-        */
-        reconnect.call(self);
-    };
-    window.LocalConnection = LocalConnection;
-})();

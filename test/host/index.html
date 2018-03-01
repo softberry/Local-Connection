@@ -11,58 +11,56 @@
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
-  <style>
-    html,body, body * {
-      padding: 0;
-      margin: 0;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-    table {
-      width: 90%;
-    }
-    p {
-      padding: 10px 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-  </style>
+
+  <link rel="stylesheet" href="//localhost:3200/style.css">
 </head>
 
 <body>
-  <table cellspacing="10" cellpadding="10" border="0">
-    <tr>
-      <td colspan="3">
-        <h1>Local LocalConnection 2.0</h1>
-        <p>This is the main browser window, which contains 3 iframes. Each iframe contains another iframe. </p>
-        <p>Parent window (this one) served on http://localhost:3300 and all embedded iframes served on http://localhost:3200, so 
-          to test foreign documents connects properly. 
-        </p>
-        <p>
-          Each embedded iframe (left.html, top.html,right.html) needs to connect each other. 
-          After a successful connection, left.html modifies top.html, top.html modifies right.html and last right.html modifies left.html.
+  <div style="padding:20px">
+      <h1>Local LocalConnection 2.0</h1>
+      <p>This is the main browser window, which contains 2 iframes. Each iframe contains another iframe. </p>
+      <p>Parent window (this one) served on http://localhost:3300 and all embedded iframes served on http://localhost:3200,
+        so to test foreign documents connects properly.
+      </p>
+      <p>
+        Each embedded iframe (left.html, top.html,right.html) needs to connect each other. After a successful connection, left.html
+        modifies top.html, top.html modifies right.html and last right.html modifies left.html.
+  
+      </p>
+      <p>Each page has a red ball inside with the class name 'status'. After a succesfull connection it gets modified and
+        becomes dditional class name 'connected'. So if all red ball turns in to green, it means that connection has been
+        established properly.
+      </p>
+  
+<br>
+<hr>
+<br>
+    
 
-        </p>
-        <p>Each page has a red ball inside with the class name 'status'. After a succesfull connection it gets 
-          modified and becomes dditional class name 'connected'. So if all red ball turns in to green, 
-          it means that connection has been established properly.
-        </p>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <iframe src="//localhost:3200/left.1.html" frameborder="0" width="200" height="200"></iframe>
-      </td>
-      <td valign="top">
-        <iframe src="//localhost:3200/top.1.html" frameborder="0" width="200" height="200"></iframe>
-      </td>
-      <td>
-        <iframe src="//localhost:3200/right.1.html" frameborder="0" width="200" height="200"></iframe>
-      </td>
-    </tr>
-  </table>
+        <h2>One level embeded iframes</h2>
+        <pre>http:localhost:3200/index.1.html</pre>
 
+        <div class="page">
+          <div class="frame">
+            <iframe src="//localhost:3200/index.1.html" frameborder="0" width="100%" height="100%" style="width:100%;height:100%;"></iframe>
+          </div>
 
+        </div>
+        <br>
+        <br>
+        <hr>
+        <br>
+        
+       
+          <h2>Two level embeded iframes</h2>
+        <pre>http:localhost:3200/index.2.html</pre>
+        <div class="page">
+          <div class="frame">
+            <iframe src="//localhost:3200/index.2.html" frameborder="0" width="100%" height="100%" style="width:100%;height:100%;"></iframe>
+          </div>
+        </div>
+
+      </div>
 
 </body>
 

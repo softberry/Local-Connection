@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "iojs"
+  - "8"
+branches:
+  only: 
+    - master
+before_script:
+  - npm install -g gulp-cli
+script: gulp deploy -h $HOST -u $USER -p $PASS
