@@ -10,8 +10,8 @@ const gulp = require('gulp'),
     stripDebug = require('gulp-strip-debug'),
     browserSync = require('browser-sync'),
     babel = require('gulp-babel'),
-    markdown = require('gulp-markdown');
-
+    markdown = require('gulp-markdown'),
+    ftp = require('vinyl-ftp');
 
 
 gulp.task('js', () => {
@@ -55,4 +55,24 @@ gulp.task('doc', () => {
 
 }
 );
+
+
+gulp.task('deploy', function () {
+    const user = process.argv[4];
+    const pass = process.argv[6];
+    const conn = ftp.create({
+        host: process.argv[4],
+        user: process.argv[6],
+        password: process.argv[8],
+        parallel: 10
+    });
+
+    gulp.src('README.md')
+        .pipe(markdown())
+        .pipe(rename('content.txt'))
+        .pipe(conn.dest('./'));
+
+    console.log(process.argv);
+
+});
 gulp.task('default', ['js', 'doc', 'server']);
