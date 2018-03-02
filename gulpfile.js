@@ -60,7 +60,7 @@ gulp.task('deploy', function () {
     gulp.src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))
-        .pipe(conn.dest('./lc'));
+        .pipe(conn.dest('./'));
 
 });
 gulp.task('default', ['js',  'server']);

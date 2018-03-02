@@ -28,7 +28,7 @@ After you add this script to your project, it defines global **`LC`** object.
 
 Each and every window, those served in iFrames and need to connect to each other needs:
 
-- A unique **`key`**. A unique Key is important, so only and only companion windows(iframes) connects to eac other.
+- A unique **`key`**. A unique Key is important, so only and only companion windows(iframes) connects to each other.
 - A **`name`** belongs to themselves.
 - List of **`names`** of other frames, those having same `key`
 
