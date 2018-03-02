@@ -40,16 +40,11 @@
   "xo": {
     "semi": true,
     "space": 4,
-    "overrides": [
-      {
-        "files": "src/localconnection.js",
-        "esnext": false
-      }
-    ],
     "globals": [
       "window",
-      "LC"
-    ]
+      "LocalConnection"
+    ],
+    "rules": {}
   },
   "author": {
     "name": "Emre Sakarya",

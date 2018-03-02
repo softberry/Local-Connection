@@ -37,7 +37,7 @@ As soon as it finds any acceptable window, registers it as an element to **`LC`*
 
 From now on all connected windows can communicate with each other.
 
-### PROPERTIES
+### OPTIONS
 |Name|Type| Required|USAGE| Description |
 |----|-----|---------|-----|-------|
 |`key` | String | YES|`LC.key="BrandName14022016"`|**Unique** connection string. Set this value for all iframes that should communicate each other. Avoid using same key for all projects. |
@@ -47,6 +47,9 @@ From now on all connected windows can communicate with each other.
 |`timeout` | Number | NO|`LC.timeout=5;`| Quit trying to connect after defined time in seconds. Default is `0` which means no timeout and keeps continuously try to connect. |
 |`onTimeout` | Function | NO|`LC.onTimeout = function(){ console.log("Timed out!"); }` | Define a function that will be called if timeout occurs. It will only be called if `timeout` is greater then `0`. |
 
+
+### PROPERTIES
+`connected` : Boolean property that shows if connection established.
 
 ### HOW TO USE IT
 
@@ -84,7 +87,7 @@ Then define options in each HTML page (which needs to connect with other)
     </script>
 ### SAMPLE
 
-A working sample available in <a href="test/">test</a> folder
+A working sample available in `/test` folder
 
 **IMPORTANT**
 
