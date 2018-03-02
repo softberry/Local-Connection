@@ -5,6 +5,7 @@ node_js:
 branches:
   only: 
     - master
-before_script:
+install:
   - npm install
-script: gulp deploy -h $HOST -u $USER -p $PASS
+script: 
+  - gulp deploy -h $HOST -u $USER -p $PASS
