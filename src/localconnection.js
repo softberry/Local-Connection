@@ -6,10 +6,6 @@
  * @public
  *    */
 'use strict';
-function CustomError(msg) {
-    this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
-    this.message = msg;
-}
 class LocalConnection {
     constructor(_opt) {
         const self = this;
@@ -22,6 +18,10 @@ class LocalConnection {
         self.onTimeout = _opt.onTimeout || function () { };
         self._timestamp = 0;
         self.connected = false;
+        self.CustomError = function (msg) {
+            this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
+            this.message = msg;
+        };
 
         if (self.missingOptions(_opt)) {
             return;
@@ -54,27 +54,29 @@ class LocalConnection {
      */
 
     missingOptions(_opt) {
+        const self = this;
         try {
             if (typeof _opt !== 'object') {
-                throw new CustomError('LocalConnection required options key,name,frames must be defined!');
+                throw new self.CustomError('LocalConnection required options key,name,frames must be defined!');
             }
+            console.log(_opt.key);
             if (!_opt.key) {
-                throw new CustomError('key (UniqueKey) must be defined ');
+                throw new self.CustomError('key (UniqueKey) must be defined ');
             }
             if (!_opt.name) {
-                throw new CustomError('name is not defined. Each document needs a name as string (a-z,A-Z)');
+                throw new self.CustomError('name is not defined. Each document needs a name as string (a-z,A-Z,0-9)');
             }
             if (!_opt.frames) {
-                throw new CustomError('frames are not defined. Give other document names in array');
+                throw new self.CustomError('frames are not defined. Give other document names in array');
             }
             if (typeof _opt.frames === 'string') {
                 _opt.frames = _opt.frames.split(',');
             }
             if (!Array.isArray(_opt.frames) || _opt.frames.length === 0) {
-                throw new CustomError('frame names should be comma separated string or an Array of stings.');
+                throw new self.CustomError('frame names should be comma separated string or an Array of stings.');
             }
         } catch (e) {
-            console.error(e.message, '\n', e.name);
+            console.error(e.message, e.name);
             return true;
         }
         return false;
@@ -244,3 +246,5 @@ class LocalConnection {
         }
     }
 }
+
+window.LocalConnection = LocalConnection;

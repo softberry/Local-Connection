@@ -25,12 +25,15 @@
         key: document.location.hash || 'uniqueConnectionString',
         name: 'left',
         frames: ['top', 'right'],
+        timeout: 3,
         onConnect: function () {
           LC.top.document.querySelector('.status').classList.add('connected')
-        }
+        },
+        onTimeout: function () { console.log('timed out!') }
+
       });
     });
- 
+
   </script>
 
 </body>
