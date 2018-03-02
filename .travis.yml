@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "iojs"
-  - "8"
+  - 8
 branches:
   only: 
     - master
