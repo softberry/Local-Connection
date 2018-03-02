@@ -24,6 +24,7 @@
     "gulp-uglify": "^3.0.0",
     "gutil": "^1.6.4",
     "ink-docstrap": "^1.1.4",
+    "minimist": "^1.2.0",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
