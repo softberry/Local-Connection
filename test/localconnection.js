@@ -213,7 +213,7 @@ var LocalConnection = function () {
                         return deeper;
                     }
                 }
-                var checkedFrame = typeof childFrame.LC !== 'undefined' ? self.checkFrame(childFrame, frame) : null;
+                var checkedFrame = typeof childFrame.LC === 'undefined' ? null : self.checkFrame(childFrame, frame);
                 if (checkedFrame !== null) {
                     return checkedFrame;
                 }

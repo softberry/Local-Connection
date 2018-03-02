@@ -49,6 +49,7 @@ From now on all connected windows can communicate with each other.
 
 
 ### PROPERTIES
+`connected` : Boolean property that shows if connection established.
 
 ### HOW TO USE IT
 
@@ -86,7 +87,7 @@ Then define options in each HTML page (which needs to connect with other)
     </script>
 ### SAMPLE
 
-A working sample available in ´/test´ folder
+A working sample available in `/test` folder
 
 **IMPORTANT**
 

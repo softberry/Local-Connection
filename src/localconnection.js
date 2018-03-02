@@ -159,7 +159,7 @@ class LocalConnection {
                 const deepFrame = objFrame.frames[d];
                 d++;
 
-                if (deepFrame.frames.length > 0 && !self[frame] ) {
+                if (deepFrame.frames.length > 0 && !self[frame]) {
                     /* Seek vertical down */
                     const deeper = deeperFrame(deepFrame, frame);
                     if (deeper !== null) {
@@ -188,13 +188,13 @@ class LocalConnection {
             i++;
             /** Seek vertical down */
 
-            if (childFrame.frames.length > 0 && !self[frame] ) {
+            if (childFrame.frames.length > 0 && !self[frame]) {
                 const deeper = deeperFrame(childFrame, frame);
                 if (deeper !== null) {
                     return deeper;
                 }
             }
-            const checkedFrame = typeof childFrame.LC !== 'undefined' ? self.checkFrame(childFrame, frame) : null;
+            const checkedFrame = typeof childFrame.LC === 'undefined' ? null : self.checkFrame(childFrame, frame);
             if (checkedFrame !== null) {
                 return checkedFrame;
             }
@@ -244,5 +244,3 @@ class LocalConnection {
         }
     }
 }
-
-
