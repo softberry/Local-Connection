@@ -48,16 +48,6 @@ gulp.task('server', () => {
         })
     });
 });
-gulp.task('doc', () => {
-    gulp.src('README.md')
-        .pipe(markdown())
-        .pipe(rename('readme.html'))
-        .pipe(gulp.dest('doc'))
-
-}
-);
-
-
 gulp.task('deploy', function () {
     const argv = require('minimist')(process.argv.slice(2));
     const conn = ftp.create({
@@ -73,4 +63,4 @@ gulp.task('deploy', function () {
         .pipe(conn.dest('./lc'));
 
 });
-gulp.task('default', ['js', 'doc', 'server']);
+gulp.task('default', ['js',  'server']);
