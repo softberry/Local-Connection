@@ -39,14 +39,14 @@ As soon as it finds any acceptable window, registers it as an element to **`LC`*
 From now on all connected windows can communicate with each other.
 
 ### OPTIONS
-|Name|Type| Required|USAGE| Description |
-|----|-----|---------|-----|-------|
-|`key` | String | YES|`LC.key="BrandName14022016"`|**Unique** connection string. Set this value for all iframes that should communicate each other. Avoid using same key for all projects. |
-|`name` | String | YES|`LC.name="left";`|Give a **different** name to each banner.|
-|`frames` | String [Array] | YES|`LC.frames="left,top,right";`|Define name of all other banners that will be connected to.|
-|`onConnect`|Function|NO|`LC.onConnect= function(){ console.log("Connected");}` |Define a function that will be called as soon as successfully connected to other iframes.|
-|`timeout` | Number | NO|`LC.timeout=5;`| Quit trying to connect after defined time in seconds. Default is `0` which means no timeout and keeps continuously try to connect. |
-|`onTimeout` | Function | NO|`LC.onTimeout = function(){ console.log("Timed out!"); }` | Define a function that will be called if timeout occurs. It will only be called if `timeout` is greater then `0`. |
+|Name|Type| Required| Description |
+|----|-----|---------|-------|
+|`key` | String | YES|**Unique** connection string. Set this value for all iframes that should communicate each other. Avoid using same key for all projects. |
+|`name` | String | YES|Give a **different** name to each banner.|
+|`frames` | String [Array] | YES|Define name of all other banners that will be connected to.|
+|`onConnect`|Function|NO| Define a function that will be called as soon as successfully connected to other iframes.|
+|`timeout` | Number | NO| Quit trying to connect after defined time in seconds. Default is `0` which means no timeout and keeps continuously try to connect. |
+|`onTimeout` | Function | NO| Define a function that will be called if timeout occurs. It will only be called if `timeout` is greater then `0`. |
 
 
 ### PROPERTIES
