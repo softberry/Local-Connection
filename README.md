@@ -17,8 +17,6 @@ Get in contact for help from developer:
 [![Website](https://img.shields.io/website-up-down-green-red/http/emresakarya.com.svg?label=Visit WebSite&style=for-the-badge)](http://www.emresakarya.com/local-connection/)
 
 
-
-**IMPORTANT** <span style="color:red">This version doesn't have backward compatibility. As this has a simplified connection method.</span>
 ## SYNCRONIZE IFRAMES IN WINDOW
 
 This script is used to communicate and synchronise iframes placed in same parent window.
