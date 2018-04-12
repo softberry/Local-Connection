@@ -196,7 +196,13 @@ class LocalConnection {
                     return deeper;
                 }
             }
-            const checkedFrame = typeof childFrame.LC === 'undefined' ? null : self.checkFrame(childFrame, frame);
+            let checkedFrame = null;
+            try {
+                checkedFrame = typeof childFrame.LC === 'undefined' ? null : self.checkFrame(childFrame, frame);
+            } catch (e) {
+
+            }
+
             if (checkedFrame !== null) {
                 return checkedFrame;
             }
