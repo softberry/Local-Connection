@@ -1,19 +1,14 @@
 /**
  * Created by es on 10.02.2016.
  */
-;
 'use strict';
-const gulp = require('gulp'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    stripComment = require('gulp-strip-comments'),
-    stripDebug = require('gulp-strip-debug'),
-    browserSync = require('browser-sync'),
-    babel = require('gulp-babel'),
-    markdown = require('gulp-markdown'),
-    ftp = require('vinyl-ftp'),
-    minimist = require('minimist');
-
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const stripComment = require('gulp-strip-comments');
+const stripDebug = require('gulp-strip-debug');
+const browserSync = require('browser-sync');
+const babel = require('gulp-babel');
 
 gulp.task('js', () => {
     gulp.src('src/localconnection.js')
@@ -29,7 +24,7 @@ gulp.task('js', () => {
 });
 
 gulp.task('server', () => {
-    var guest = browserSync.create();
+    const guest = browserSync.create();
 
     guest.init({
         open: false,
@@ -38,29 +33,15 @@ gulp.task('server', () => {
         server: ['src', 'test/guest', 'docs'],
         port: '3200'
     }, () => {
-        var host = browserSync.create()
+        const host = browserSync.create();
         host.init({
             open: true,
             online: false,
             files: ['**'],
             server: 'test/host',
             port: '3300'
-        })
+        });
     });
 });
-gulp.task('deploy', function () {
-    const argv = require('minimist')(process.argv.slice(2));
-    const conn = ftp.create({
-        host: argv.host,
-        user: argv.user,
-        password: argv.pass,
-        parallel: 10
-    });
 
-    gulp.src('README.md')
-        .pipe(markdown())
-        .pipe(rename('doc.txt'))
-        .pipe(conn.dest('./'));
-
-});
-gulp.task('default', ['js',  'server']);
+gulp.task('default', ['js', 'server']);
