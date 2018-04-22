@@ -93,6 +93,3 @@ A working sample available in `/test` folder
 -As soon as local connection established: 
  - runs `onConnect` function. Therefore, stop or pause video, canvas or css animations and initialize these functions through `onConnect` method.
  - all defined frames are available to current `LC` object as child. For example banner `left` becomes child of **`LC`** in the frame `top` as `LC.left` as so on.
-
-
-
