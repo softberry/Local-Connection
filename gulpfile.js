@@ -44,4 +44,14 @@ gulp.task('server', () => {
     });
 });
 
+/** CI Deploy */
+gulp.task('deploy', () => {
+    const argv = require('minimist')(process.argv.slice(2));
+    const conn = ftp.create({
+        host: argv.host,
+        user: argv.user,
+        password: argv.pass,
+        parallel: 10
+    });
+});
 gulp.task('default', ['js', 'server']);
