@@ -9,6 +9,7 @@ const stripComment = require('gulp-strip-comments');
 const stripDebug = require('gulp-strip-debug');
 const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
+const ftp = require('vinyl-ftp');
 
 gulp.task('js', () => {
     gulp.src('src/localconnection.js')
