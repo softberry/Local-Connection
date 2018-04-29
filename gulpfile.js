@@ -10,6 +10,7 @@ const stripDebug = require('gulp-strip-debug');
 const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
 const ftp = require('vinyl-ftp');
+const markdown = require('gulp-markdown');
 
 gulp.task('js', () => {
     gulp.src('src/localconnection.js')
@@ -54,5 +55,9 @@ gulp.task('deploy', () => {
         password: argv.pass,
         parallel: 10
     });
+    gulp.src('README.md')
+        .pipe(markdown())
+        .pipe(rename('doc.txt'))
+        .pipe(conn.dest('./'));
 });
 gulp.task('default', ['js', 'server']);

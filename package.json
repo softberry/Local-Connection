@@ -11,8 +11,6 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.1",
     "browser-sync": "^2.23.7",
-    "del": "^2.2.0",
-    "fs": "0.0.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-markdown": "^2.0.1",
@@ -20,8 +18,6 @@
     "gulp-strip-comments": "^2.4.2",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
-    "gutil": "^1.6.4",
-    "ink-docstrap": "^1.1.4",
     "minimist": "^1.2.0",
     "vinyl-ftp": "^0.4.5"
   },
