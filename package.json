@@ -10,7 +10,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.1",
-    "browser-sync": "^2.23.7",
+    "express": "^4.16.3",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-markdown": "^2.0.1",
@@ -19,6 +19,7 @@
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "minimist": "^1.2.0",
+    "open": "0.0.5",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
