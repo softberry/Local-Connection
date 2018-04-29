@@ -7,13 +7,14 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const stripComment = require('gulp-strip-comments');
 const stripDebug = require('gulp-strip-debug');
-const browserSync = require('browser-sync');
+const express = require('express');
+const open = require('open');
 const babel = require('gulp-babel');
 const ftp = require('vinyl-ftp');
 const markdown = require('gulp-markdown');
 
-gulp.task('js', () => {
-    gulp.src('src/localconnection.js')
+function compileJS(done) {
+    return gulp.src('src/localconnection.js')
         .pipe(babel({
             presets: ['env']
         }))
@@ -22,28 +23,41 @@ gulp.task('js', () => {
         .pipe(stripComment())
         .pipe(uglify())
         .pipe(rename('localconnection.min.js'))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('dist/'))
+        .on('finish', () => {
+            done();
+        });
+}
+gulp.task('js', () => {
+    compileJS(() => { });
 });
 
 gulp.task('server', () => {
-    const guest = browserSync.create();
 
-    guest.init({
-        open: false,
-        online: false,
-        files: ['**'],
-        server: ['src', 'test/guest', 'docs'],
-        port: '3200'
-    }, () => {
-        const host = browserSync.create();
-        host.init({
-            open: true,
-            online: false,
-            files: ['**'],
-            server: 'test/host',
-            port: '3300'
-        });
-    });
+    const options = {
+        dotfiles: 'ignore',
+        etag: false,
+        extensions: ['htm', 'html', 'js', 'css'],
+        index: ['index.html'],
+        maxAge: '1d',
+        redirect: false,
+        setHeaders: function (res, pathname, stat) {
+
+            res.set('x-timestamp', Date.now())
+        }
+    }
+
+    const guest = express();
+    const host = express();
+    guest.use(express.static('test/guest'));
+    guest.use(express.static('dist', options));
+    host.use(express.static('test/host', options));
+    host.use(express.static('dist', options));
+    guest.listen(3200);
+    host.listen(3000);
+    compileJS(() => {
+        open('http://127.0.0.1:3000');
+    })
 });
 
 /** CI Deploy */
