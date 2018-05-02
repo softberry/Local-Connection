@@ -93,3 +93,11 @@ A working sample available in `/test` folder
 -As soon as local connection established: 
  - runs `onConnect` function. Therefore, stop or pause video, canvas or css animations and initialize these functions through `onConnect` method.
  - all defined frames are available to current `LC` object as child. For example banner `left` becomes child of **`LC`** in the frame `top` as `LC.left` as so on.
+
+ #### Selenium Tests
+
+Thanks to Browserstack for supporting opensource projects.
+
+<a href="https://nam01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fbrowserstack.com&data=02%7C01%7C%7C8850944b52b54019787f08d5b00408b9%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C636608453724341736&sdata=LVpJXS6TSIH64yBI4nLM1yuDetCGZvX67UfyOpiMc6o%3D&reserved=0">
+<img src="https://p14.zdusercontent.com/attachment/1015988/VKb0LMGOoloZVoOjGXPZgCGs0?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..id73HDHuR_4c8rQmwumpow.JZBJjg7K8gegpYW7wDHG99oR8iTTJmRvqKmCd5kt7TN2jMXp9GccA99a3GwN1ILpWOxhGPJRoIaGMaM41AZtQ8QIpJ7sP5Abs8TEYAJmlkVfp4Uv40AGjzdix07YevdpO8gN_fwtPn32ZLTCFukjaHvBFpl9x3hvjrEBMLX5T2I6jSFF7WsXA-93-O0kHHTFg74BwJ6mkPDkTpufLOYrZEvuF5tRJcaRBz78t3leO9s31lALmisWvX23UJoYhxP5moSmVO_vPEWA59h3xXgNKfzghTGrPkoWSPIxQWtqhDw.Yfn9ZPWVWc3A6lk_qK836Q" alt="Browser Stack">
+</a>
