@@ -19,7 +19,7 @@
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "minimist": "^1.2.0",
-    "open": "0.0.5",
+    "open": "6.0.0",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
