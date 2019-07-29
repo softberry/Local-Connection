@@ -13,14 +13,14 @@
     "express": "^4.16.3",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
-    "gulp-markdown": "^2.0.1",
+    "gulp-markdown": "^4.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-strip-comments": "^2.4.2",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "minimist": "^1.2.0",
     "open": "6.0.0",
-    "vinyl-ftp": "^0.4.5"
+    "vinyl-ftp": "^0.6.1"
   },
   "scripts": {
     "test": "xo src/localconnection.js && gulp"
