@@ -3,7 +3,7 @@
  */
 'use strict';
 const gulp = require('gulp');
-const {series, src, dest} = require('gulp');
+const { src, dest} = require('gulp');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const stripComment = require('gulp-strip-comments');
@@ -63,6 +63,7 @@ function server(cb) {
 /** CI Deploy */
 function deploy (cb){
     const argv = require('minimist')(process.argv.slice(2));
+    
     const conn = ftp.create({
         host: argv.host,
         user: argv.user,
@@ -78,8 +79,8 @@ function deploy (cb){
         });;
 }
 
-exports.js=js;
+exports.js=compileJS;
 exports.deploy=deploy;
 exports.server=server;
 
-exports.default=series(js,server);
+exports.default=compileJS;
