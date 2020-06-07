@@ -62,14 +62,13 @@ function server(cb) {
 }
 /** CI Deploy */
 function deploy (cb){
-    const argv = require('minimist')(process.argv.slice(2));
-    
     const conn = ftp.create({
-        host: argv.host,
-        user: argv.user,
-        password: argv.pass,
+        host: process.env.host,
+        user: process.env.user,
+        password: process.env.pass,
         parallel: 10
     });
+
     gulp.src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))

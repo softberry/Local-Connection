@@ -19,7 +19,7 @@ Get in contact for help from developer:
 
 ## SYNCRONIZE IFRAMES IN WINDOW
 
-This script is used to communicate and synchronise iframes placed in same parent window.
+This script is used to communicate and synchronise iframes placed in same parent window..
 
 After you add this script to your project, it defines global **`LC`** object.
 ## How it works:
