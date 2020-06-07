@@ -18,9 +18,9 @@ class LocalConnection {
         self.onTimeout = _opt.onTimeout || function () { };
         self._timestamp = 0;
         self.connected = false;
-        self.CustomError = function (msg) {
+        self.CustomError = function (message) {
             this.name = 'LocalConnectionCusomError. https://github.com/softberry/Local-Connection';
-            this.message = msg;
+            this.message = message;
         };
 
         if (self.missingOptions(_opt)) {
@@ -32,14 +32,15 @@ class LocalConnection {
         if (window.addEventListener) {
             window.addEventListener('load', () => {
                 self.ready = true;
-                console.log(self.name, ' ready ', self.ready);
+                console.log(self.name, 'ready', self.ready);
             });
         } else {
             window.attachEvent('onload', () => {
                 self.ready = true;
-                console.log(self.name, ' ready ', self.ready);
+                console.log(self.name, 'ready', self.ready);
             });
         }
+
         self.ready = window.document.readyState === 'complete';
 
         /*
@@ -59,26 +60,32 @@ class LocalConnection {
             if (typeof _opt !== 'object') {
                 throw new self.CustomError('LocalConnection required options key,name,frames must be defined!');
             }
+
             console.log(_opt.key);
             if (!_opt.key) {
                 throw new self.CustomError('key (UniqueKey) must be defined ');
             }
+
             if (!_opt.name) {
                 throw new self.CustomError('name is not defined. Each document needs a name as string (a-z,A-Z,0-9)');
             }
+
             if (!_opt.frames) {
                 throw new self.CustomError('frames are not defined. Give other document names in array');
             }
+
             if (typeof _opt.frames === 'string') {
                 _opt.frames = _opt.frames.split(',');
             }
+
             if (!Array.isArray(_opt.frames) || _opt.frames.length === 0) {
                 throw new self.CustomError('frame names should be comma separated string or an Array of stings.');
             }
-        } catch (e) {
-            console.error(e.message, e.name);
+        } catch (error) {
+            console.error(error.message, error.name);
             return true;
         }
+
         return false;
     }
     /**
@@ -96,10 +103,12 @@ class LocalConnection {
             /*  Do not try to connect anymore, Timed out */
             return self.onTimeout();
         }
+
         if (window.parent === window) {
             /* 'window' is not in iframe, which means there is no other frames available. Quit trying */
             return self.onTimeout();
         }
+
         let n = 0;
         for (n = 0; n < self.frames.length; n++) {
             self[self.frames[n]] = self[self.frames[n]] || self.getFrameByName(self.frames[n]);
@@ -127,12 +136,14 @@ class LocalConnection {
     isConnected() {
         let status = true;
         const self = this;
-        for (let e = 0; e < self.frames.length; e++) {
-            if (self[self.frames[e]] === null) {
+        for (let itemIndex = 0; itemIndex < self.frames.length; itemIndex++) {
+            if (self[self.frames[itemIndex]] === null) {
                 status = false;
             }
-            console.log(self.name, 'try to connect: ', self.frames[e], status);
+
+            console.log(self.name, 'try to connect:', self.frames[itemIndex], status);
         }
+
         return status;
     }
 
@@ -147,6 +158,7 @@ class LocalConnection {
         if (frame === self.name) {
             return window;
         }
+
         let top = window;
 
         /**
@@ -155,10 +167,10 @@ class LocalConnection {
          * @param frame     name of the frame that should match
          * @returns {*}     if matches returns     objFrame else continue to seek deeper and returns null
          */
-        function deeperFrame(objFrame, frame) {
+        function deeperFrame(objectFrame, frame) {
             let d = 0;
-            while (d < objFrame.length) {
-                const deepFrame = objFrame.frames[d];
+            while (d < objectFrame.length) {
+                const deepFrame = objectFrame.frames[d];
                 d++;
 
                 if (deepFrame.frames.length > 0 && !self[frame]) {
@@ -168,11 +180,13 @@ class LocalConnection {
                         return deeper;
                     }
                 }
+
                 const checkedFrame = self.checkFrame(deepFrame, frame);
                 if (checkedFrame !== null) {
                     return checkedFrame;
                 }
             }
+
             return null;
         }
 
@@ -183,6 +197,7 @@ class LocalConnection {
             /** Seek vertical up */
             top = top.parent;
         }
+
         let i = 0;
         while (i < top.frames.length) {
             /** Seek horizontal */
@@ -196,10 +211,11 @@ class LocalConnection {
                     return deeper;
                 }
             }
+
             let checkedFrame = null;
             try {
                 checkedFrame = typeof childFrame.LC === 'undefined' ? null : self.checkFrame(childFrame, frame);
-            } catch (e) {
+            } catch {
 
             }
 
@@ -207,6 +223,7 @@ class LocalConnection {
                 return checkedFrame;
             }
         }
+
         return null;
     }
     /**
@@ -228,9 +245,10 @@ class LocalConnection {
                 self.pair(window);
                 return checkThisOut;
             }
-        } catch (e) {
+        } catch {
             return null;
         }
+
         return null;
     }
     /**
@@ -244,6 +262,7 @@ class LocalConnection {
         if (w.LC.key === self.key) {
             self[w.LC.name] = w;
         }
+
         if (!self.connected) {
             if (self.isConnected()) {
                 self.connected = true;
