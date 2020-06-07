@@ -2,38 +2,36 @@
  * Created by es on 10.02.2016.
  */
 'use strict';
-const gulp = require('gulp');
+
+const { src, dest, series} = require('gulp');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const stripComment = require('gulp-strip-comments');
 const stripDebug = require('gulp-strip-debug');
 const express = require('express');
 const open = require('open');
-const babel = require('gulp-babel');
+ const babel = require('gulp-babel');
 const ftp = require('vinyl-ftp');
 const markdown = require('gulp-markdown');
 
 function compileJS(done) {
-    return gulp.src('src/localconnection.js')
+    return src('src/localconnection.js')
         .pipe(babel({
-            presets: ['env']
+            presets: ['@babel/env']
         }))
-        .pipe(gulp.dest('test/'))
+        .pipe(dest('test/'))
         .pipe(stripDebug())
         .pipe(stripComment())
         .pipe(uglify())
         .pipe(rename('localconnection.min.js'))
-        .pipe(gulp.dest('dist/'))
-        .on('finish', () => {
-            done();
-        });
+        .pipe(dest('dist/'))
+        .on("finish",done);
 }
-gulp.task('js', () => {
-    compileJS(() => { });
-});
 
-gulp.task('server', () => {
-
+function js(cb){
+    compileJS(cb);
+}
+function serve(cb) {
     const options = {
         dotfiles: 'ignore',
         etag: false,
@@ -57,21 +55,28 @@ gulp.task('server', () => {
     host.listen(3000);
     compileJS(() => {
         open('http://127.0.0.1:3000');
-    })
-});
-
+    });
+    cb();
+}
 /** CI Deploy */
-gulp.task('deploy', () => {
-    const argv = require('minimist')(process.argv.slice(2));
+function deploy (cb){
+    
     const conn = ftp.create({
-        host: argv.host,
-        user: argv.user,
-        password: argv.pass,
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASS,
         parallel: 10
     });
-    gulp.src('README.md')
+
+    return src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))
         .pipe(conn.dest('./'));
-});
-gulp.task('default', ['js', 'server']);
+        
+}
+
+exports.js=compileJS;
+exports.deploy=deploy;
+exports.serve=series(js,serve);
+
+exports.default=compileJS;
