@@ -72,7 +72,10 @@ function deploy (cb){
     gulp.src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))
-        .pipe(conn.dest('./'));
+        .pipe(conn.dest('./'))
+        .on('finish', () => {
+            cb();
+        });;
 }
 
 exports.js=js;
