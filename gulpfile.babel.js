@@ -62,7 +62,7 @@ function server(cb) {
 }
 /** CI Deploy */
 function deploy (cb){
-    console.log(process.env.host, process.env.user,process.env.pass);
+    
     const conn = ftp.create({
         host: process.env.host,
         user: process.env.user,
