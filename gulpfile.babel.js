@@ -2,8 +2,8 @@
  * Created by es on 10.02.2016.
  */
 'use strict';
-const gulp = require('gulp');
-const { src, dest} = require('gulp');
+
+const { src, dest, series} = require('gulp');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const stripComment = require('gulp-strip-comments');
@@ -25,9 +25,7 @@ function compileJS(done) {
         .pipe(uglify())
         .pipe(rename('localconnection.min.js'))
         .pipe(dest('dist/'))
-        .on('finish', () => {
-            done();
-        });
+        .on("finish",done);
 }
 
 function js(cb){
@@ -70,17 +68,15 @@ function deploy (cb){
         parallel: 10
     });
 
-    src('README.md')
+    return src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))
-        .pipe(conn.dest('./'))
-        .on('finish', () => {
-            cb();
-        });;
+        .pipe(conn.dest('./'));
+        
 }
 
 exports.js=compileJS;
 exports.deploy=deploy;
-exports.serve=serve;
+exports.serve=series(js,serve);
 
 exports.default=compileJS;
