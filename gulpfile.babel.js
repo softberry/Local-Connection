@@ -33,7 +33,7 @@ function compileJS(done) {
 function js(cb){
     compileJS(cb);
 }
-function server(cb) {
+function serve(cb) {
     const options = {
         dotfiles: 'ignore',
         etag: false,
@@ -81,6 +81,6 @@ function deploy (cb){
 
 exports.js=compileJS;
 exports.deploy=deploy;
-exports.server=server;
+exports.serve=serve;
 
 exports.default=compileJS;

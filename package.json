@@ -11,7 +11,6 @@
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/register": "^7.10.1",
-    "babel-core": "^6.26.3",
     "express": "^4.16.3",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -20,7 +19,6 @@
     "gulp-strip-comments": "^2.4.2",
     "gulp-strip-debug": "^3.0.0",
     "gulp-uglify": "^3.0.0",
-    "minimist": "^1.2.0",
     "open": "^7.0.4",
     "vinyl-ftp": "^0.6.1",
     "xo": "^0.32.0"
@@ -28,7 +26,9 @@
   "scripts": {
     "test": "xo src/localconnection.js --fix &&  gulp",
     "build": "gulp",
-    "deploy": "gulp  deploy"
+    "deploy": "gulp deploy",
+    "serve": "gulp serve"
+  
   },
   "keywords": [
     "local",
