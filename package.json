@@ -28,7 +28,7 @@
   "scripts": {
     "test": "xo src/localconnection.js --fix && gulp",
     "build": "gulp",
-    "deploy": "gulp  deploy --host $HOST --user $USER --pass $PASS"
+    "deploy": "gulp  deploy"
   },
   "keywords": [
     "local",
