@@ -64,9 +64,9 @@ function server(cb) {
 function deploy (cb){
     
     const conn = ftp.create({
-        host: process.env.host,
-        user: process.env.user,
-        password: process.env.pass,
+        host: process.env.HOST,
+        user: process.env.USER,
+        password: process.env.PASS,
         parallel: 10
     });
 
