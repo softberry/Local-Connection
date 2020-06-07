@@ -70,7 +70,7 @@ function deploy (cb){
         parallel: 10
     });
 
-    gulp.src('README.md')
+    src('README.md')
         .pipe(markdown())
         .pipe(rename('doc.txt'))
         .pipe(conn.dest('./'))
