@@ -14,7 +14,7 @@
     "express": "^4.16.3",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
-    "gulp-markdown": "^5.0.1",
+    "gulp-markdown": "^6.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-strip-comments": "^2.4.2",
     "gulp-strip-debug": "^3.0.0",
