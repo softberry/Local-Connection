@@ -11,8 +11,7 @@ const stripDebug = require('gulp-strip-debug');
 const express = require('express');
 const open = require('open');
  const babel = require('gulp-babel');
-const ftp = require('vinyl-ftp');
-const markdown = require('gulp-markdown');
+
 
 function compileJS(done) {
     return src('src/localconnection.js')
@@ -58,25 +57,9 @@ function serve(cb) {
     });
     cb();
 }
-/** CI Deploy */
-function deploy (cb){
-    
-    const conn = ftp.create({
-        host: process.env.HOST,
-        user: process.env.USER,
-        password: process.env.PASS,
-        parallel: 10
-    });
 
-    return src('README.md')
-        .pipe(markdown())
-        .pipe(rename('doc.txt'))
-        .pipe(conn.dest('./'));
-        
-}
 
 exports.js=compileJS;
-exports.deploy=deploy;
 exports.serve=series(js,serve);
 
 exports.default=compileJS;
